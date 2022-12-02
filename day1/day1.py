@@ -20,3 +20,9 @@ def main():
 
     return 0
 main()
+
+#output :
+#Answer to question 1
+#70116
+#Answer to question 2
+#206582
