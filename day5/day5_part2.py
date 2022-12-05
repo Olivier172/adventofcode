@@ -16,7 +16,7 @@ def main():
         #step2:
         #reading the stacks at the beginning, end in a newline and after that the reangement procedures are specified in the input
         if( line == "\n") :
-            readStacks=0#put flag down to stop reading input
+            readStacks=0 #put flag down to stop reading in stacks
             for i in range(0,AMOUNT_OF_STACKS):
                 stacks[i].reverse() #reverse the lists if we are done reading the input, so the top element is the last element in the list
             #print the stacks at the beginning
