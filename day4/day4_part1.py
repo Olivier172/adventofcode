@@ -17,8 +17,9 @@ def main():
         if( ((startSection1>=startSection2) and (endSection1<=endSection2)) or ((startSection2>=startSection1) and (endSection2<=endSection1))):
             count+=1
     print(f"There are {count} assignment pairs where one range fully contains the other")
-start = time.time()
+    
+#start = time.time()
 main()
-print((time.time() - start)*1000)
+#print((time.time() - start)*1000)
 # output:
 # There are 477 assignment pairs where one range fully contains the other
