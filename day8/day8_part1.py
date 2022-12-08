@@ -20,7 +20,7 @@ def checkVisibility(forest, vm):
                 vm[row][col] = True
             
         
-    #check visibility from east and East:        
+    #check visibility from east:        
     for row in range(len(forest)-1,-1,-1):
         maxSeenFromEast=-1
         for col in range(len(forest[0])-1,-1,-1):
@@ -28,7 +28,7 @@ def checkVisibility(forest, vm):
                 maxSeenFromEast=forest[row][col]
                 vm[row][col] = True
             
-    #check visibility from east and south:        
+    #check visibility from south:        
     for col in range(len(forest[0])-1,-1,-1):
         maxSeenFromSouth=-1
         for row in range(len(forest)-1,-1,-1):
