@@ -4,13 +4,13 @@
 
 class Dir(object):
     
-    def __init__(self, name='/',parent=None):
+    def __init__(self, name, parent=None):
         self.children = []
         self.name = name
         self.parent = parent
 
     def __str__(self):
-        res = "Dir node with name : " + self.getName()
+        res = "Dir node with name : " + self.getName() 
         return res
 
     def getName(self):
@@ -22,69 +22,68 @@ class Dir(object):
     def getChildren(self):
         return self.children
 
-    def getChild(self, name):
+    def getChild(self, name:str):
         for child in self.getChildren():
             if isinstance(child,Dir) and child.getName() == name:
                 return child
         return None #not found, shouldn't happen
     
     def addChild(self,child):
-        self.children.append(child)
+        self.getChildren().append(child)
 
-    def totalSize(self) -> int:
+    def getSize(self) -> int:
         sum=0
         for child in self.getChildren():
-            print(isinstance(child,Dir))
-            if isinstance(child,Dir):
-                sum += child.totalSize()
-            else:
-                sum += child.getSize()
-                print("size of file in totalsize " +str(child.getSize()) )
+            sum += child.getSize()
         return sum
     
+    def getSolution(self) -> int:
+        values = []
+        for child in self.getChildren():
+                if(isinstance(child, Dir)):
+                    values.append(child.getSolution())
+        total = sum(values)
+        if(self.getSize() > 100000):
+            return total
+        else:
+            return total + self.getSize()
 
 class File(object):
 
-    def __init__(self, name , size):
+    def __init__(self, name:str , size:int):
         self.name = name
         self.size = size
+    
+    def __str__(self):
+        res = "file with name " + self.name + " and size " + str(self.size)
+        return res
 
     def getSize(self):
         return self.size
 
 
 def buildTree():
-    file = open("input.txt","r")
-    lines = file.readlines()
-    root = Dir()
-    parent = root
-    lastCommand = [] #bv cd hsswswtq
+    with open("input.txt","r") as f:
+        lines = [line.strip() for line in f.readlines()]
+    root = Dir('/')
+    cdir = root
     for line in lines:
         elements = line.split()
-        if elements[0] == "$": #elements = ["$" "command"] and command is ls or cd
-            print("command" + str(elements))
-            lastCommand = elements[1::]
-            print("last command "+ str(lastCommand))
-            continue
-
-        if lastCommand[0]=="ls": #lastCommand = ["ls" "something"]
-            if elements[0] == "dir": #Dir
-                print("Dir " + str(elements))
-                parent.addChild(Dir(elements[1],parent))
-            else: #file
-                print("file " + str(elements))
-                parent.addChild(File(elements[1],int(elements[0])))
-        
-        if lastCommand[0]=="cd": #lastCommand = ["cd" "dirname"]
-            if lastCommand[1]== "..":
-                parent = parent.getParent()
-            elif lastCommand[1] == "/":
-                parent = root
+        #print(elements)
+        if elements[1]=="cd":
+            if elements[2]== "/":
+                cdir = root
+            elif elements[2] == "..":
+                cdir = cdir.getParent()
             else: #cd to a child
-                parent = parent.getChild(lastCommand[1])
-                
-
-
+                cdir = cdir.getChild(elements[2])
+        elif elements[1]=="ls":
+            continue
+        else:
+            if elements[0] == 'dir': #Dir
+                cdir.addChild(Dir(elements[1],cdir))
+            else: #file
+                cdir.addChild(File(elements[1],int(elements[0])))               
     return root
 
 def sumDirSizes(root:Dir, maxsize) -> int:
@@ -97,13 +96,14 @@ def sumDirSizes(root:Dir, maxsize) -> int:
             ts = child.totalSize()
             sumChild = ts
             Dirs.append(child) #add this to the list of dirs to evaluate
-            #print("dir added to list " + child.getName() + " with ts " + str(ts) )
+            print("dir added to list " + child.getName() + " with ts " + str(ts) )
         else:
             sumChild = child.getSize()
+            print("sumchil als een file : " + str(sumChild))
 
         if sumChild <maxsize:
             total+=sumChild
-            #print("total increased :" + str(total))
+            print("total increased :" + str(total))
 
     return total
 
@@ -112,7 +112,8 @@ def main():
     print("Day7")
     root = buildTree()
     print(root)
-    sum = sumDirSizes(root,100000)
+    print(f"size of root is {root.getSize()}")
+    sum = root.getSolution()
     print(f"the sum of the total sizes of those directories is {sum}")
 
 if __name__ == "__main__":
