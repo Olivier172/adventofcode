@@ -26,24 +26,23 @@ def printKnots(knots):
 def resolveTailPosition(head, tail, diff):
     #If the head is ever two steps directly up, down, left, or right from the tail,
     #the tail must also move one step in that direction so it remains close enough:  
-    if(head[0]==tail[0] or head[1]==tail[1]): #check if tail and head are in the same row or column
-        #x distance larger than 2? tail follows 1 position in that direction
-        if( abs(diff[0])==2 and abs(diff[1])==0 ):
-            tail[0]+=diff[0]//2 #follow one step in that direction
-        #y distance larger than 2? tail follows 1 position in that direction
-        elif( abs(diff[0])==0 and abs(diff[1])==2 ):
-            tail[1]+=diff[1]//2 #follow one step in that direction
-    else: #check wether they are diagnally still adjacent if not in same row or column
-        #follow one step in both directions if one of the following conditions is true:
-        if( abs(diff[0])==1 and abs(diff[1])==2 ):
-            tail[0]+=diff[0]
-            tail[1]+=diff[1]//2
-        elif( abs(diff[0])==2 and abs(diff[1])==1):
-            tail[0]+=diff[0]//2
-            tail[1]+=diff[1]
-        elif(abs(diff[0])==2 and abs(diff[1])==2): #new case that is possible if the previous knot had to move diagonally
-            tail[0]+=diff[0]//2
-            tail[1]+=diff[1]//2
+    #x distance larger than 2? tail follows 1 position in that direction
+    if( abs(diff[0])==2 and abs(diff[1])==0 ):
+        tail[0]+=diff[0]//2 #follow one step in that direction
+    #y distance larger than 2? tail follows 1 position in that direction
+    elif( abs(diff[0])==0 and abs(diff[1])==2 ):
+        tail[1]+=diff[1]//2 #follow one step in that direction
+    #check wether they are diagnally still adjacent if not in same row or column
+    #follow one step in both directions if one of the following conditions is true:
+    elif( abs(diff[0])==1 and abs(diff[1])==2 ):
+        tail[0]+=diff[0]
+        tail[1]+=diff[1]//2
+    elif( abs(diff[0])==2 and abs(diff[1])==1):
+        tail[0]+=diff[0]//2
+        tail[1]+=diff[1]
+    elif(abs(diff[0])==2 and abs(diff[1])==2): #new case that is possible if the previous knot had to move diagonally
+        tail[0]+=diff[0]//2
+        tail[1]+=diff[1]//2
 
 def main():
     print("day9")
