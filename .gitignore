@@ -1,3 +1,4 @@
 # ignore binaries from cs: 
-bin/*
-obj/*
+bin/
+obj/
+.vscode/
