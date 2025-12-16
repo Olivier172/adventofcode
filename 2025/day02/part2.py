@@ -33,7 +33,7 @@ def numberContainsRepeatedGroupOfDigits(numberToCheck: int) -> bool:
     numberToCheckString = str(numberToCheck)
     length = len(numberToCheckString)
 
-    # check for every valid groupLengtj if it is a repeating group of digits in the numberToCheck
+    # check for every valid groupLength if it is a repeating group of digits in the numberToCheck
     for groupLength in range(1, length // 2 + 1):
         # group length must be a divisor of length in order for the repeated group to be able to match to number to check
         if length % groupLength == 0:
